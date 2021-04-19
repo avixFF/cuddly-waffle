@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+      target: development
+    environment:
+      CONTAINER_MODE: app
+      NGINX_PATH: "public"

@@ -1,0 +1,14 @@
+from: 'php'
+user: 'www-data'
+version: '87b3ebdd4b9b2f07b8adc561b861c0948fbd165a'
+environment: 'laravel'
+default_service: 'app'
+build_args:
+  COMPOSER_VERSION: '2'
+  PHP_VERSION: '8.0'
+project:
+  context: development
+modules:
+  - mysql
+  - redis
+  - horizon

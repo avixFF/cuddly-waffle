@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/var/www/html/
+    ports:
+      - ${EXPOSE_PORT:-80}:80
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: app
+    volumes:
+      - mysql-data:/var/lib/mysql/
+  cache:
+    image: redis:6.0.8
+  scheduler:
+    build:
+      context: .
+      target: development
+    environment:
+      CONTAINER_MODE: scheduler
+      NGINX_PATH: public
+    volumes:
+      - .:/var/www/html/
+  worker:
+    build:
+      context: .
+      target: development
+    environment:
+      CONTAINER_MODE: worker
+      NGINX_PATH: public
+    volumes:
+      - .:/var/www/html/
+volumes:
+  mysql-data:
+    driver: local
